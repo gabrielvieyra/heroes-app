@@ -1,8 +1,11 @@
 function App() {
+  let name: string = 'Gabriel';
+  let surname: string = 'Vieyra';
+
   return (
     <>
-      <h1>Probando 01</h1>
-      <h2>Probando 02</h2>
+      <h1>Apellido: {surname}</h1>
+      <h2>Nombre: {name}</h2>
     </>
   );
 }
