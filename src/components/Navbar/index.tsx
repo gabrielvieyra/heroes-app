@@ -10,29 +10,35 @@ import './styles.scss';
 const Navbar: FC = () => {
   return (
     <nav className='navbar'>
-      <img src={logo} alt='logo' className='navbar__logo' />
-      <ul className='navbar__list'>
-        <li className='navbar__list-item'>
-          <NavLink
-            to='/marvel'
-            className={({ isActive }) => {
-              return isActive ? 'navbar__list-item--activeLink' : 'navbar__list-item--noActiveLink';
-            }}
-          >
-            Marvel
-          </NavLink>
-        </li>
-        <li className='navbar__list-item'>
-          <NavLink
-            to='/dc'
-            className={({ isActive }) => {
-              return isActive ? 'navbar__list-item--activeLink' : 'navbar__list-item--noActiveLink';
-            }}
-          >
-            DC
-          </NavLink>
-        </li>
-      </ul>
+      <div className='navbar__container'>
+        <img src={logo} alt='logo' className='navbar__container-logo' />
+        <ul className='navbar__container-list'>
+          <li className='navbar__container-list-item'>
+            <NavLink
+              to='/marvel'
+              className={({ isActive }) => {
+                return isActive
+                  ? 'navbar__container-list-item--activeLink'
+                  : 'navbar__container-list-item--noActiveLink';
+              }}
+            >
+              Marvel
+            </NavLink>
+          </li>
+          <li className='navbar__container-list-item'>
+            <NavLink
+              to='/dc'
+              className={({ isActive }) => {
+                return isActive
+                  ? 'navbar__container-list-item--activeLink'
+                  : 'navbar__container-list-item--noActiveLink';
+              }}
+            >
+              DC
+            </NavLink>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 };
