@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+
+.navbar {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: var(--light-blue);
+  display: flex;
+  align-items: center;
+
+  &__logo {
+    width: 6.25rem;
+    height: 3.125rem;
+  }
+
+  &__list {
+    display: flex;
+    gap: 0.625rem;
+
+    &-item {
+      font-size: 1rem;
+      font-weight: 400;
+      cursor: pointer;
+
+      &--activeLink {
+        color: var(--black);
+      }
+
+      &--noActiveLink {
+        color: var(--light-grey);
+      }
+    }
+  }
+}
