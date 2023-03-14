@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 // Assets
-import logo from '../../assets/logo.svg';
+import logo from '../../../assets/logo.svg';
 
 // Styles
 import './styles.scss';
@@ -11,7 +11,9 @@ const Navbar: FC = () => {
   return (
     <nav className='navbar'>
       <div className='navbar__container'>
-        <img src={logo} alt='logo' className='navbar__container-logo' />
+        <Link to='/marvel'>
+          <img src={logo} alt='logo' className='navbar__container-logo' />
+        </Link>
         <ul className='navbar__container-list'>
           <li className='navbar__container-list-item'>
             <NavLink

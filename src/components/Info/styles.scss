@@ -1,0 +1,10 @@
+@import '../../styles/variables.scss';
+
+.info {
+  display: flex;
+  flex-direction: column;
+
+  &__sectionName {
+    font-weight: var(--font-weight-medium);
+  }
+}
