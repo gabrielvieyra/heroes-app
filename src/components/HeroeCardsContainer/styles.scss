@@ -1,0 +1,14 @@
+.heroeCardsContainer {
+  width: 80%;
+  margin: 1.5rem auto;
+
+  &__title {
+    margin-bottom: 0.5rem;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px 24px;
+  }
+}
