@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/index';
 
 // Pages
-import { Marvel, Dc, Hero } from './pages/index';
+import { Marvel, Dc, Hero, Search } from './pages/index';
 
 // Styles
 import './App.scss';
@@ -18,7 +18,8 @@ function App() {
         <Route path='/marvel' element={<Marvel />} />
         <Route path='/dc' element={<Dc />} />
 
-        <Route path='/hero' element={<Hero />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/hero/:id' element={<Hero />} />
 
         <Route path='/' element={<Navigate to='/marvel' />} />
       </Routes>

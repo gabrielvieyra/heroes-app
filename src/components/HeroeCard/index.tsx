@@ -10,10 +10,10 @@ import './styles.scss';
 interface HeroeCardProps {
   id: string;
   superhero: string;
-  publisher: 'DC Comics' | 'Marvel Comics' | '';
+  publisher?: 'DC Comics' | 'Marvel Comics' | '';
   alterEgo: string;
   firstAppearance: string;
-  characters: string;
+  characters?: string;
 }
 
 const HeroeCard: FC<HeroeCardProps> = ({ id, superhero, alterEgo, firstAppearance }) => {
