@@ -1,5 +1,8 @@
-import { FC } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { FC, useState, useEffect, useContext } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+
+// Context
+import { AuthContext } from '../../context/AuthContext';
 
 // Assets
 import logo from '../../../assets/logo.svg';
@@ -8,6 +11,33 @@ import logo from '../../../assets/logo.svg';
 import './styles.scss';
 
 const Navbar: FC = () => {
+  const navigate = useNavigate();
+  const { dataLogin, setDataLogin } = useContext(AuthContext);
+  const [name, setName] = useState<string>('');
+
+  useEffect(() => {
+    const name = localStorage.getItem('name') || '';
+    setName(name);
+  }, [dataLogin]);
+
+  function onLogout(): void {
+    handleDataLogin();
+    removeLocalStorage();
+    navigate('/login');
+  }
+
+  function handleDataLogin(): void {
+    setDataLogin({
+      logged: false,
+      name: '',
+    });
+  }
+
+  function removeLocalStorage(): void {
+    localStorage.removeItem('name');
+    localStorage.removeItem('isLogged');
+  }
+
   return (
     <nav className='navbar'>
       <div className='navbar__container'>
@@ -52,6 +82,14 @@ const Navbar: FC = () => {
             </NavLink>
           </li>
         </ul>
+        {name && (
+          <div>
+            <span>{name}</span>
+            <button style={{ backgroundColor: 'lightcoral' }} onClick={onLogout}>
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
