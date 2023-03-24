@@ -1,18 +1,27 @@
 import { useState } from 'react';
 
-export const useForm = (initialForm: {
-  searchText: string;
-}): {
-  formState: { searchText: string };
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-} => {
-  const [formState, setFormState] = useState<{ searchText: string }>(initialForm);
+interface InitialForm {
+  email?: string;
+  password?: string;
+  searchText?: string;
+}
 
-  function onInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    const {name, value} = e.target;
+type eventInput = React.ChangeEvent<HTMLInputElement>;
+
+export const useForm = (
+  initialForm: InitialForm
+): {
+  formState: InitialForm;
+  onInputChange: (e: eventInput) => void;
+} => {
+  const [formState, setFormState] = useState<InitialForm>(initialForm);
+
+  function onInputChange(e: eventInput): void {
+    const { name, value } = e.target;
     setFormState({
-        ...formState, [name]: value
-    })
+      ...formState,
+      [name]: value,
+    });
   }
 
   return {
