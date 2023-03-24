@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Pages
-import { Marvel, Dc, Hero, Search, Login } from '../pages/index';
+import { Marvel, Dc, Hero, Search, Login, Register } from '../pages/index';
 
 // Routes
 import { PrivateRoute } from './PrivateRoute';
@@ -12,10 +12,15 @@ export const AppRouter = () => {
     <Routes>
       {/* Public Routes */}
       <Route
-        path='/login'
+        path='/*'
         element={
           <PublicRoute>
-            <Login />
+            <Routes>
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+
+              <Route path='/*' element={<Navigate to='/login' />} />
+            </Routes>
           </PublicRoute>
         }
       ></Route>
@@ -31,12 +36,12 @@ export const AppRouter = () => {
 
               <Route path='/search' element={<Search />} />
               <Route path='/hero/:id' element={<Hero />} />
+
+              <Route path='/*' element={<Navigate to='/marvel' />} />
             </Routes>
           </PrivateRoute>
         }
       ></Route>
-
-      <Route path='/' element={<Navigate to='/marvel' />} />
     </Routes>
   );
 };
