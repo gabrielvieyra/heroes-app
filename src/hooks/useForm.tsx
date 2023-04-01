@@ -3,6 +3,7 @@ import { useState } from 'react';
 interface InitialForm {
   email?: string;
   password?: string;
+  fullName?: string;
   searchText?: string;
 }
 
