@@ -1,13 +1,18 @@
 import { FC, ReactNode, useState, createContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 
+// Firebase
+import {
+  registerUserWithEmailAndPassword,
+  loginWithEmailAndPassword,
+  singInWithGoogle,
+} from '../firebase/providers';
 interface AuthState {
   status: 'checking' | 'not-authenticated' | 'authenticated';
   uid: string;
   email: string;
   displayName: string;
   photoURL: string;
-  errorMessage?: string;
+  errorMessages?: Array<string>;
 }
 
 interface AuthContextProps {
@@ -16,6 +21,8 @@ interface AuthContextProps {
   handleLogout: (errorMessage: string) => void;
   handleLogin: (uid: string, displayName: string, email: string, photoURL: string) => void;
   onLoginWithCredentials: (email: string, password: string) => void;
+  creatingUserWithEmailAndPassword: (email: string, password: string, fullName: string) => void;
+  onGoogleSignIn: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -25,20 +32,76 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const navigate = useNavigate();
   const [dataLogin, setDataLogin] = useState<AuthState>({
     status: 'not-authenticated',
     uid: '',
     email: '',
     displayName: '',
     photoURL: '',
-    errorMessage: '',
+    errorMessages: [],
   });
 
-  function onLoginWithCredentials(email: string, password: string): void {
-    console.log('email:', email);
-    console.log('password:', password);
+  // Cuando disparan el onGoogleSignIn quiere decir que estan intentando autenticarse con google
+  // Autentico al usuario o muestro un error
+  async function onGoogleSignIn(): Promise<void> {
+    checkingCredentials();
+
+    const result = await singInWithGoogle();
+    // Si la autenticacion sale mal reseteamos todo
+    if (!result.ok) {
+      const { errorMessage } = result;
+      handleLogout(errorMessage);
+      return;
+    }
+    // Si todo sale bien, logueamos al usuario
+    const { uid, displayName, email, photoURL } = result;
+    handleLogin(uid!, displayName!, email!, photoURL!);
+    // setLocalStorage('true', displayName);
+    // const lastPath = localStorage.getItem('lastPath') || '/';
+    // navigate(lastPath);
   }
+
+  async function onLoginWithCredentials(email: string, password: string): Promise<void> {
+    checkingCredentials();
+    const response = await loginWithEmailAndPassword(email, password);
+    // Si la autenticacion sale mal reseteamos todo
+    if (!response.ok) {
+      const { errorMessage } = response;
+      handleLogout(errorMessage);
+      return;
+    }
+    // Si todo sale bien, logueamos al usuario
+    console.log('response:', response);
+    const { uid, displayName, photoURL } = response;
+    handleLogin(uid!, displayName!, email, photoURL!);
+  }
+
+  async function creatingUserWithEmailAndPassword(
+    email: string,
+    password: string,
+    fullName: string
+  ): Promise<void> {
+    checkingCredentials();
+    const response = await registerUserWithEmailAndPassword(email, password, fullName);
+    // Si la creacion sale mal reseteamos todo
+    if (!response.ok) {
+      const { errorMessage } = response;
+      handleLogout(errorMessage);
+      return;
+    }
+    // Si todo sale bien, logueamos al usuario
+    const { uid, displayName, photoURL } = response;
+    handleLogin(uid!, displayName!, email!, photoURL!);
+  }
+
+  function checkingCredentials(): void {
+    setDataLogin({ ...dataLogin, status: 'checking' });
+  }
+
+  // function setLocalStorage(isLogged: string, displayName: string): void {
+  //   localStorage.setItem('isLogged', isLogged);
+  //   localStorage.setItem('displayName', displayName);
+  // }
 
   function handleLogout(errorMessage: string): void {
     setDataLogin({
@@ -48,25 +111,25 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       email: '',
       displayName: '',
       photoURL: '',
-      errorMessage: errorMessage,
+      errorMessages: [errorMessage],
     });
   }
 
   function handleLogin(uid: string, displayName: string, email: string, photoURL: string): void {
     setDataLogin({ ...dataLogin, status: 'authenticated', uid, displayName, email, photoURL });
-    setLocalStorage('true', displayName);
-    const lastPath = localStorage.getItem('lastPath') || '/';
-    navigate(lastPath);
-  }
-
-  function setLocalStorage(isLogged: string, name: string): void {
-    localStorage.setItem('isLogged', isLogged);
-    localStorage.setItem('displayName', name);
   }
 
   return (
     <AuthContext.Provider
-      value={{ dataLogin, setDataLogin, onLoginWithCredentials, handleLogout, handleLogin }}
+      value={{
+        dataLogin,
+        setDataLogin,
+        onLoginWithCredentials,
+        creatingUserWithEmailAndPassword,
+        onGoogleSignIn,
+        handleLogout,
+        handleLogin,
+      }}
     >
       {children}
     </AuthContext.Provider>

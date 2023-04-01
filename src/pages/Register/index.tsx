@@ -1,5 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useContext } from 'react';
 import { Link } from 'react-router-dom';
+
+// Context
+import { AuthContext } from '../../context/AuthContext';
 
 // Custom hooks
 import { useForm } from '../../hooks/useForm';
@@ -15,7 +18,11 @@ const Register: FC = () => {
     password: '',
     fullName: '',
   });
-  const [errorMessages, setErrorMessages] = useState<Array<string>>([]);
+  const { dataLogin, setDataLogin, creatingUserWithEmailAndPassword } = useContext(AuthContext);
+  const isCheckingAuthentication = useMemo(
+    () => dataLogin.status === 'checking',
+    [dataLogin.status]
+  );
 
   function validate(): void {
     const errorMsgs = [];
@@ -36,13 +43,17 @@ const Register: FC = () => {
       errorMsgs.push('La contraseña debe tener al menos 6 caracteres');
     }
 
-    setErrorMessages(errorMsgs);
+    setDataLogin({
+      ...dataLogin,
+      errorMessages: errorMsgs,
+    });
     formSubmitted(errorMsgs);
   }
 
   function formSubmitted(value: Array<string>): void {
     if (value.length === 0) {
-      console.log('formulario valido');
+      const { email, password, fullName } = formState;
+      creatingUserWithEmailAndPassword(email!, password!, fullName!);
     }
   }
 
@@ -54,10 +65,14 @@ const Register: FC = () => {
   return (
     <div className='register'>
       <h2>Crear cuenta</h2>
-      {errorMessages.length > 0 && (
+      {dataLogin.errorMessages!.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {errorMessages.map((msg, key) => {
-            return <span key={key}>{msg}</span>;
+          {dataLogin.errorMessages!.map((msg, key) => {
+            return (
+              <span key={key} style={{ color: 'red' }}>
+                {msg}
+              </span>
+            );
           })}
         </div>
       )}
@@ -85,7 +100,11 @@ const Register: FC = () => {
         />
 
         <div>
-          <button type='submit' style={{ backgroundColor: 'lightcoral' }}>
+          <button
+            type='submit'
+            style={{ backgroundColor: 'lightcoral' }}
+            disabled={isCheckingAuthentication}
+          >
             Crear cuenta
           </button>
           <div>

@@ -1,5 +1,11 @@
 // Todas las funciones de autenticacion que vamos a usar vienen de firebase/auth
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+} from 'firebase/auth';
 import { FirebaseAuth } from './config';
 
 const googleProvider = new GoogleAuthProvider();
@@ -18,6 +24,50 @@ export const singInWithGoogle = async () => {
     return {
       ok: false,
       errorMessage,
+    };
+  }
+};
+
+export const registerUserWithEmailAndPassword = async (
+  email: string,
+  password: string,
+  displayName: string
+) => {
+  try {
+    const response = await createUserWithEmailAndPassword(FirebaseAuth, email, password);
+    const { uid, photoURL } = response.user;
+    // Actualizamos el displayName en Firebase
+    await updateProfile(FirebaseAuth.currentUser!, { displayName });
+
+    return {
+      ok: true,
+      uid,
+      photoURL,
+      displayName,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      errorMessage: error.message,
+    };
+  }
+};
+
+// Autenticacion con el usuario y contraseña que creamos
+export const loginWithEmailAndPassword = async (email: string, password: string) => {
+  try {
+    const response = await signInWithEmailAndPassword(FirebaseAuth, email, password);
+    const { uid, photoURL, displayName } = response.user;
+    return {
+      ok: true,
+      uid,
+      photoURL,
+      displayName,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      errorMessage: error.message,
     };
   }
 };
