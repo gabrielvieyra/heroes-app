@@ -1,0 +1,14 @@
+@import '../../../styles/variables.scss';
+
+.navbar-item {
+  font-size: 1rem;
+  cursor: pointer;
+
+  &--activeLink {
+    color: var(--black);
+  }
+
+  &--noActiveLink {
+    color: var(--light-grey);
+  }
+}
