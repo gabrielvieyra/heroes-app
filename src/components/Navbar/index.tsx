@@ -1,8 +1,14 @@
-import { FC, useState, useEffect, useContext } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { FC, useContext } from 'react';
+import { Link } from 'react-router-dom';
+
+// Components
+import NavbarItem from '../Navbar/NavbarItem/index';
 
 // Context
 import { AuthContext } from '../../context/AuthContext';
+
+// FeatherIcons
+import { LogOut } from 'react-feather';
 
 // Assets
 import logo from '../../../assets/logo.svg';
@@ -10,86 +16,50 @@ import logo from '../../../assets/logo.svg';
 // Styles
 import './styles.scss';
 
-const Navbar: FC = () => {
-  const navigate = useNavigate();
-  const { dataLogin, setDataLogin } = useContext(AuthContext);
-  const [name, setName] = useState<string>('');
+interface Link {
+  label: string;
+  route: string;
+}
 
-  useEffect(() => {
-    const name = localStorage.getItem('name') || '';
-    setName(name);
-  }, [dataLogin]);
+const Navbar: FC = () => {
+  const links: Array<Link> = [
+    {
+      label: 'Marvel',
+      route: '/marvel',
+    },
+    {
+      label: 'DC',
+      route: '/dc',
+    },
+    {
+      label: 'Search',
+      route: '/search',
+    },
+  ];
+  const { dataLogin, handleLogout } = useContext(AuthContext);
 
   function onLogout(): void {
-    handleDataLogin();
-    removeLocalStorage();
-    navigate('/login');
-  }
-
-  function handleDataLogin(): void {
-    setDataLogin({
-      logged: false,
-      name: '',
-    });
-  }
-
-  function removeLocalStorage(): void {
-    localStorage.removeItem('name');
-    localStorage.removeItem('isLogged');
+    handleLogout('');
   }
 
   return (
     <nav className='navbar'>
       <div className='navbar__container'>
-        <Link to='/marvel'>
-          <img src={logo} alt='logo' className='navbar__container-logo' />
-        </Link>
-        <ul className='navbar__container-list'>
-          <li className='navbar__container-list-item'>
-            <NavLink
-              to='/marvel'
-              className={({ isActive }) => {
-                return isActive
-                  ? 'navbar__container-list-item--activeLink'
-                  : 'navbar__container-list-item--noActiveLink';
-              }}
-            >
-              Marvel
-            </NavLink>
-          </li>
-          <li className='navbar__container-list-item'>
-            <NavLink
-              to='/dc'
-              className={({ isActive }) => {
-                return isActive
-                  ? 'navbar__container-list-item--activeLink'
-                  : 'navbar__container-list-item--noActiveLink';
-              }}
-            >
-              DC
-            </NavLink>
-          </li>
-          <li className='navbar__container-list-item'>
-            <NavLink
-              to='/search'
-              className={({ isActive }) => {
-                return isActive
-                  ? 'navbar__container-list-item--activeLink'
-                  : 'navbar__container-list-item--noActiveLink';
-              }}
-            >
-              Search
-            </NavLink>
-          </li>
-        </ul>
-        {name && (
-          <div>
-            <span>{name}</span>
-            <button style={{ backgroundColor: 'lightcoral' }} onClick={onLogout}>
-              Logout
-            </button>
-          </div>
-        )}
+        <div className='navbar__container-wrapper'>
+          <Link to='/marvel'>
+            <img src={logo} alt='logo' className='navbar__container-wrapper-logo' />
+          </Link>
+          <ul className='navbar__container-wrapper-list'>
+            {links.map(({ label, route }, index) => {
+              return <NavbarItem label={label} route={route} key={index} />;
+            })}
+          </ul>
+        </div>
+
+        <div className='navbar__container-box'>
+          <span>{dataLogin.displayName}</span>
+          <LogOut onClick={onLogout} className='navbar__container-box-icon' />
+        </div>
       </div>
     </nav>
   );
