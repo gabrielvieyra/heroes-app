@@ -1,5 +1,5 @@
 import { FC, useMemo, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Context
 import { AuthContext } from '../../context/AuthContext';
@@ -13,6 +13,7 @@ import './styles.scss';
 type eventSubmit = React.FormEvent<HTMLFormElement>;
 
 const Register: FC = () => {
+  const navigate = useNavigate();
   const { formState, onInputChange } = useForm({
     email: '',
     password: '',
@@ -50,10 +51,11 @@ const Register: FC = () => {
     formSubmitted(errorMsgs);
   }
 
-  function formSubmitted(value: Array<string>): void {
+  async function formSubmitted(value: Array<string>): Promise<void> {
     if (value.length === 0) {
       const { email, password, fullName } = formState;
-      creatingUserWithEmailAndPassword(email!, password!, fullName!);
+      await creatingUserWithEmailAndPassword(email!, password!, fullName!);
+      navigate('/marvel');
     }
   }
 

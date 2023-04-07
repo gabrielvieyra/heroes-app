@@ -1,5 +1,5 @@
 import { FC, useMemo, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Context
 import { AuthContext } from '../../context/AuthContext';
@@ -13,6 +13,7 @@ import './styles.scss';
 type eventSubmit = React.FormEvent<HTMLFormElement>;
 
 const Login: FC = () => {
+  const navigate = useNavigate();
   const { formState, onInputChange } = useForm({
     email: '',
     password: '',
@@ -26,6 +27,7 @@ const Login: FC = () => {
 
     const { email, password } = formState;
     onLoginWithCredentials(email!, password!);
+    navigate('/marvel');
   }
 
   return (
@@ -69,7 +71,10 @@ const Login: FC = () => {
           <button
             type='button'
             style={{ backgroundColor: 'lightblue' }}
-            onClick={onGoogleSignIn}
+            onClick={async () => {
+              await onGoogleSignIn();
+              navigate('/marvel');
+            }}
             disabled={isAuthenticating}
           >
             Google
