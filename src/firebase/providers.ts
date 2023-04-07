@@ -71,3 +71,8 @@ export const loginWithEmailAndPassword = async (email: string, password: string)
     };
   }
 };
+
+export const logoutFirebase = async () => {
+  // signOut, este metodo cierra todo ej google, firebase, twitter
+  return await FirebaseAuth.signOut();
+};

@@ -5,6 +5,7 @@ import {
   registerUserWithEmailAndPassword,
   loginWithEmailAndPassword,
   singInWithGoogle,
+  logoutFirebase,
 } from '../firebase/providers';
 interface AuthState {
   status: 'checking' | 'not-authenticated' | 'authenticated';
@@ -56,9 +57,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     // Si todo sale bien, logueamos al usuario
     const { uid, displayName, email, photoURL } = result;
     handleLogin(uid!, displayName!, email!, photoURL!);
-    // setLocalStorage('true', displayName);
-    // const lastPath = localStorage.getItem('lastPath') || '/';
-    // navigate(lastPath);
   }
 
   async function onLoginWithCredentials(email: string, password: string): Promise<void> {
@@ -71,7 +69,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       return;
     }
     // Si todo sale bien, logueamos al usuario
-    console.log('response:', response);
     const { uid, displayName, photoURL } = response;
     handleLogin(uid!, displayName!, email, photoURL!);
   }
@@ -91,19 +88,15 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     }
     // Si todo sale bien, logueamos al usuario
     const { uid, displayName, photoURL } = response;
-    handleLogin(uid!, displayName!, email!, photoURL!);
+    handleLogin(uid!, displayName!, email, photoURL!);
   }
 
   function checkingCredentials(): void {
     setDataLogin({ ...dataLogin, status: 'checking' });
   }
 
-  // function setLocalStorage(isLogged: string, displayName: string): void {
-  //   localStorage.setItem('isLogged', isLogged);
-  //   localStorage.setItem('displayName', displayName);
-  // }
-
-  function handleLogout(errorMessage: string): void {
+  async function handleLogout(errorMessage: string): Promise<void> {
+    await logoutFirebase();
     setDataLogin({
       ...dataLogin,
       status: 'not-authenticated',
