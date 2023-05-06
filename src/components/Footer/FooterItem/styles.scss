@@ -1,0 +1,12 @@
+@import '../../../styles/variables.scss';
+
+.footer-item {
+  a {
+    font-size: 1rem; //16px
+    color: var(--black);
+
+    &:hover {
+      text-decoration-line: underline;
+    }
+  }
+}
