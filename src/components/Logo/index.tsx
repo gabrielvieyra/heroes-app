@@ -1,15 +1,28 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="1085.000000pt" height="1280.000000pt" viewBox="0 0 1085.000000 1280.000000"
- preserveAspectRatio="xMidYMid meet">
-<metadata>
-Created by potrace 1.15, written by Peter Selinger 2001-2017
-</metadata>
-<g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
-<path d="M3130 12025 c-306 -52 -571 -180 -727 -349 -46 -51 -78 -100 -113
+import { FC } from 'react';
+
+// Styles
+import './styles.scss';
+
+export const Logo: FC = () => {
+  return (
+    <svg
+      role='img'
+      version='1.0'
+      xmlns='http://www.w3.org/2000/svg'
+      width='42.38'
+      height='50'
+      viewBox='0 0 1085.000000 1280.000000'
+      fill='none'
+      preserveAspectRatio='xMidYMid meet'
+    >
+      <metadata>Created by potrace 1.15, written by Peter Selinger 2001-2017</metadata>
+      <g
+        transform='translate(0.000000,1280.000000) scale(0.100000,-0.100000)'
+        fill='#000000'
+        stroke='none'
+      >
+        <path
+          d='M3130 12025 c-306 -52 -571 -180 -727 -349 -46 -51 -78 -100 -113
 -171 -56 -115 -72 -185 -71 -302 0 -73 7 -105 50 -236 l50 -152 -24 -70 c-42
 -121 -30 -214 37 -290 47 -53 116 -89 214 -111 41 -9 74 -20 74 -24 0 -5 28
 -43 61 -86 l62 -77 -6 -88 c-29 -398 -190 -625 -477 -673 -94 -15 -680 -142
@@ -47,8 +60,13 @@ fill="#000000" stroke="none">
 333 -215 503 -306 58 -31 85 -51 80 -59 -27 -45 -586 -894 -592 -900 -4 -4
 -25 0 -47 9 -124 52 -478 -57 -597 -185 -26 -28 -54 -51 -62 -51 -9 0 -21 22
 -31 57 -24 81 -14 279 20 428 67 288 222 732 411 1178 l16 38 62 -46 c34 -25
-141 -98 237 -163z"/>
-<path d="M3812 9921 c-10 -6 -11 -16 -4 -42 l10 -34 1 31 c1 16 6 35 13 42 14
-14 0 16 -20 3z"/>
-</g>
-</svg>
+141 -98 237 -163z'
+        />
+        <path
+          d='M3812 9921 c-10 -6 -11 -16 -4 -42 l10 -34 1 31 c1 16 6 35 13 42 14
+14 0 16 -20 3z'
+        />
+      </g>
+    </svg>
+  );
+};

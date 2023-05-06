@@ -3,15 +3,13 @@ import { Link } from 'react-router-dom';
 
 // Components
 import NavbarItem from '../Navbar/NavbarItem/index';
+import { Logo } from '../Logo';
 
 // Context
 import { AuthContext } from '../../context/AuthContext';
 
 // FeatherIcons
 import { LogOut } from 'react-feather';
-
-// Assets
-import logo from '../../../assets/logo.svg';
 
 // Styles
 import './styles.scss';
@@ -47,7 +45,7 @@ const Navbar: FC = () => {
       <div className='navbar__container'>
         <div className='navbar__container-wrapper'>
           <Link to='/marvel'>
-            <img src={logo} alt='logo' className='navbar__container-wrapper-logo' />
+            <Logo />
           </Link>
           <ul className='navbar__container-wrapper-list'>
             {links.map(({ label, route }, index) => {
