@@ -14,13 +14,13 @@ import { LogOut } from 'react-feather';
 // Styles
 import './styles.scss';
 
-interface Link {
+interface NavbarLink {
   label: string;
   route: string;
 }
 
 const Navbar: FC = () => {
-  const links: Array<Link> = [
+  const links: Array<NavbarLink> = [
     {
       label: 'Marvel',
       route: '/marvel',

@@ -1,0 +1,21 @@
+@import '../../styles/variables.scss';
+
+.footer {
+  width: 100%;
+  background-color: var(--light-blue);
+
+  &__container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0.875rem 0; //14px 0px
+    display: flex;
+    align-items: center;
+
+    &-links {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem; //12px
+    }
+  }
+}
