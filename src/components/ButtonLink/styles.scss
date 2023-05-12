@@ -1,0 +1,8 @@
+.button-link {
+  color: var(--black);
+  text-align: center;
+
+  &:hover {
+    text-decoration-line: underline;
+  }
+}
