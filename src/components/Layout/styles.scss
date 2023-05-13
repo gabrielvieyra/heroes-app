@@ -5,6 +5,8 @@
   flex-direction: column;
 
   &__children {
+    display: flex;
+    flex-direction: column;
     flex: 1;
   }
 }
