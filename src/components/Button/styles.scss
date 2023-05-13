@@ -1,0 +1,22 @@
+.button {
+  padding: 0.5rem 1.25rem; //8px 20px
+  background-color: var(--blue);
+  color: var(--white);
+  font-family: var(--main-font);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  border-radius: 0.5rem; //8px
+  min-width: 4rem; //64px
+  width: 100%;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--dark-blue);
+  }
+
+  &[disabled] {
+    background-color: var(--light-grey);
+    cursor: not-allowed;
+  }
+}
