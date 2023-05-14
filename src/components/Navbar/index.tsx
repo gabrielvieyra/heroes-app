@@ -19,6 +19,8 @@ interface NavbarLink {
   route: string;
 }
 
+const LOGOUT_COLOR: string = '#04121d';
+
 const Navbar: FC = () => {
   const links: Array<NavbarLink> = [
     {
@@ -56,7 +58,9 @@ const Navbar: FC = () => {
 
         <div className='navbar__container-box'>
           <span>{dataLogin.displayName}</span>
-          <LogOut onClick={onLogout} className='navbar__container-box-icon' />
+          <Link to='/login'>
+            <LogOut onClick={onLogout} color={LOGOUT_COLOR} />
+          </Link>
         </div>
       </div>
     </nav>

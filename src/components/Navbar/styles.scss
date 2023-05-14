@@ -28,9 +28,8 @@
       align-items: center;
       gap: 1rem;
 
-      &-icon {
-        color: var(--black);
-        cursor: pointer;
+      a {
+        display: flex;
       }
     }
   }
