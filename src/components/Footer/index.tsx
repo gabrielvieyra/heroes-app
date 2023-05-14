@@ -28,7 +28,7 @@ export const Footer: FC = () => {
   return (
     <footer className='footer' aria-label='footer'>
       <nav className='footer__container'>
-        <Link to='/marvel'>
+        <Link to='/'>
           <Logo />
         </Link>
         <ul className='footer__container-links'>

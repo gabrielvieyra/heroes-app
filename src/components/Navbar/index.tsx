@@ -25,7 +25,7 @@ const Navbar: FC = () => {
   const links: Array<NavbarLink> = [
     {
       label: 'Marvel',
-      route: '/marvel',
+      route: '/',
     },
     {
       label: 'DC',
@@ -46,7 +46,7 @@ const Navbar: FC = () => {
     <nav className='navbar'>
       <div className='navbar__container'>
         <div className='navbar__container-wrapper'>
-          <Link to='/marvel'>
+          <Link to='/'>
             <Logo />
           </Link>
           <ul className='navbar__container-wrapper-list'>

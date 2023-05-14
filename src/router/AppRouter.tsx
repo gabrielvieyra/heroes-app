@@ -1,8 +1,12 @@
 import { useEffect, useContext } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 // Pages
-import { Marvel, Dc, Hero, Search, Login, Register } from '../pages/index';
+import { Marvel, Dc, Hero, Search, Login, Register, NotFound } from '../pages/index';
+
+// Components
+import { PrivateRoute } from './PrivateRoute';
+import { PublicRoute } from './PublicRoute';
 
 // Context
 import { AuthContext } from '../context/AuthContext';
@@ -16,7 +20,7 @@ export const AppRouter = () => {
   const { dataLogin, handleLogout, handleLogin } = useContext(AuthContext);
 
   useEffect(() => {
-    checkAuth();
+    // checkAuth();
   }, []);
 
   function checkAuth(): void {
@@ -27,7 +31,7 @@ export const AppRouter = () => {
 
       const { uid, email, displayName, photoURL } = user;
       handleLogin(uid, displayName!, email!, photoURL!);
-      navigate('/marvel');
+      navigate('/');
     });
   }
 
@@ -37,27 +41,23 @@ export const AppRouter = () => {
   }
 
   return (
-    // Si estoy autenticado significa que puedo mostrar las rutas privadas
-    // En el caso de no estar autenticado voy a mostrar las rutas publicas
     <Routes>
-      {dataLogin.status === 'authenticated' ? (
-        // Protected Routes
-        <>
-          <Route path='/marvel' element={<Marvel />} />
-          <Route path='/dc' element={<Dc />} />
+      {/* Marvel y el resto de las paginas son elementos hijos de PrivateRoute, entonces primero tiene que pasar por el componente PrivateRoute */}
+      {/* Cuando tenemos componentes que tienen el mismo nivel de autorizacion ej en este caso cuando un usuario se autentica tiene acceso a todo */}
+      <Route element={<PrivateRoute />}>
+        <Route path='/' element={<Marvel />} />
+        <Route path='/dc' element={<Dc />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/hero/:id' element={<Hero />} />
+      </Route>
 
-          <Route path='/search' element={<Search />} />
-          <Route path='/hero/:id' element={<Hero />} />
-        </>
-      ) : (
-        // Public Routes
-        <>
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-        </>
-      )}
+      <Route element={<PublicRoute />}>
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+      </Route>
 
-      <Route path='/*' element={<Navigate to='/login' />} />
+      {/* Con el asterisco lo que hacemos es que el element que cargamos se va a mostrar cuando la ruta que quiere el usuario no existe */}
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 };
