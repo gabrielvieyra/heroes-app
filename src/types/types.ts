@@ -1,3 +1,13 @@
+export interface LogUser {
+  email: string;
+  password: string;
+}
+
+export interface FormErrorMsgs {
+  email?: string;
+  password?: string;
+}
+
 export interface Heroe {
   id: string;
   superhero: string;

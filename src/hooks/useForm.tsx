@@ -1,24 +1,22 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-interface InitialForm {
-  email?: string;
-  password?: string;
-  fullName?: string;
-  searchText?: string;
-}
+// Interfaces
+import { LogUser } from '../types/types';
 
-type eventInput = React.ChangeEvent<HTMLInputElement>;
+type inputEvent = ChangeEvent<HTMLInputElement>;
 
 export const useForm = (
-  initialForm: InitialForm
+  inicialState: LogUser
 ): {
-  formState: InitialForm;
-  onInputChange: (e: eventInput) => void;
+  formState: LogUser;
+  onInputChange: (e: inputEvent) => void;
 } => {
-  const [formState, setFormState] = useState<InitialForm>(initialForm);
+  // Variable de estado donde almacenamos el estado del formulario
+  const [formState, setFormState] = useState<LogUser>(inicialState);
 
-  function onInputChange(e: eventInput): void {
+  function onInputChange(e: inputEvent): void {
     const { name, value } = e.target;
+
     setFormState({
       ...formState,
       [name]: value,
