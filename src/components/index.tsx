@@ -5,5 +5,19 @@ import Info from './Info';
 import { Layout } from './Layout';
 import { Footer } from './Footer';
 import { Logo } from './Logo';
+import { Button } from './Button';
+import { Input } from './Input';
+import { ButtonLink } from './ButtonLink';
 
-export { Navbar, HeroeCard, HeroeCardsContainer, Info, Layout, Footer, Logo };
+export {
+  Navbar,
+  HeroeCard,
+  HeroeCardsContainer,
+  Info,
+  Layout,
+  Footer,
+  Logo,
+  Button,
+  Input,
+  ButtonLink,
+};
