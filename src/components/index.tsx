@@ -9,6 +9,7 @@ import { Button } from './Button';
 import { Input } from './Input';
 import { ButtonLink } from './ButtonLink';
 import { Spinner } from './Spinner';
+import { Error } from './Error';
 
 export {
   Navbar,
@@ -22,4 +23,5 @@ export {
   Input,
   ButtonLink,
   Spinner,
+  Error,
 };

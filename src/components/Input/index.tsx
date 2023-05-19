@@ -1,5 +1,8 @@
 import { FC, HTMLInputTypeAttribute } from 'react';
 
+// Components
+import { Error } from '../../components';
+
 // Styles
 import './styles.scss';
 
@@ -38,9 +41,7 @@ export const Input: FC<InputProps> = ({
         onChange={onChange}
       />
       {error && (
-        <div className='input-container__error'>
-          <p className='input-container__error-description'>{errorMsg}</p>
-        </div>
+        <Error>{errorMsg}</Error>
       )}
     </div>
   );
