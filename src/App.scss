@@ -18,6 +18,10 @@ body {
   overflow-x: hidden;
 }
 
+h1 {
+  font-size: var(--font-size-xl);
+}
+
 li {
   list-style: none;
 }

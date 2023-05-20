@@ -52,7 +52,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   async function onLoginWithCredentials(user: LogUser): Promise<void> {
     checkingCredentials();
     const response = await loginWithEmailAndPassword(user);
-    console.log('response:', response);
     // Si la autenticacion sale mal reseteamos todo
     if (!response.ok) {
       const { errorMessage } = response;
@@ -90,7 +89,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   async function creatingUserWithEmailAndPassword(user: RegUser): Promise<void> {
     checkingCredentials();
     const response = await registerUserWithEmailAndPassword(user);
-    console.log('response:', response);
     // Si la creacion sale mal reseteamos todo
     if (!response.ok) {
       const { errorMessage } = response;
