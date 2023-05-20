@@ -1,18 +1,13 @@
 import { ChangeEvent, useState } from 'react';
 
 // Interfaces
-import { LogUser } from '../types/types';
+import { LogUser, RegUser } from '../types/types';
 
 type inputEvent = ChangeEvent<HTMLInputElement>;
 
-export const useForm = (
-  inicialState: LogUser
-): {
-  formState: LogUser;
-  onInputChange: (e: inputEvent) => void;
-} => {
+export const useForm = <T extends LogUser | RegUser>(initialState: T) => {
   // Variable de estado donde almacenamos el estado del formulario
-  const [formState, setFormState] = useState<LogUser>(inicialState);
+  const [formState, setFormState] = useState(initialState);
 
   function onInputChange(e: inputEvent): void {
     const { name, value } = e.target;

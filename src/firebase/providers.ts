@@ -8,60 +8,61 @@ import {
 } from 'firebase/auth';
 import { FirebaseAuth } from './config';
 
+// Interfaces
+import { LogUser, RegUser } from '../types/types';
+
 const googleProvider = new GoogleAuthProvider();
 
 export const singInWithGoogle = async () => {
   try {
     // A signInWithPopup le pasamos como primer argumento la instancia que creamos en el archivo config.ts y como segundo argumento el proveedor que quiero usar para
     // que aparezca el popup ej google, twitter
-    const result = await signInWithPopup(FirebaseAuth, googleProvider);
-    const { displayName, email, photoURL, uid } = result.user;
+    const response = await signInWithPopup(FirebaseAuth, googleProvider);
+    const { displayName } = response.user;
+    const token = await response.user.getIdToken();
 
-    return { ok: true, displayName, email, photoURL, uid };
-  } catch (error) {
-    const errorMessage = error.message;
-
-    return {
-      ok: false,
-      errorMessage,
-    };
-  }
-};
-
-export const registerUserWithEmailAndPassword = async (
-  email: string,
-  password: string,
-  displayName: string
-) => {
-  try {
-    const response = await createUserWithEmailAndPassword(FirebaseAuth, email, password);
-    const { uid, photoURL } = response.user;
-    // Actualizamos el displayName en Firebase
-    await updateProfile(FirebaseAuth.currentUser!, { displayName });
-
-    return {
-      ok: true,
-      uid,
-      photoURL,
-      displayName,
-    };
+    return { ok: true, displayName, token };
   } catch (error) {
     return {
       ok: false,
       errorMessage: error.message,
+    };
+  }
+};
+
+export const registerUserWithEmailAndPassword = async (user: RegUser) => {
+  const { email, password, name } = user;
+  try {
+    const response = await createUserWithEmailAndPassword(FirebaseAuth, email, password);
+    // Actualizamos el displayName en Firebase
+    await updateProfile(FirebaseAuth.currentUser!, { displayName: name });
+    const { displayName } = response.user;
+    const token = await response.user.getIdToken();
+
+    return {
+      ok: true,
+      token,
+      displayName,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      errorMessage: err.message,
     };
   }
 };
 
 // Autenticacion con el usuario y contraseña que creamos
-export const loginWithEmailAndPassword = async (email: string, password: string) => {
+export const loginWithEmailAndPassword = async (user: LogUser) => {
+  const { email, password } = user;
   try {
     const response = await signInWithEmailAndPassword(FirebaseAuth, email, password);
-    const { uid, photoURL, displayName } = response.user;
+    const { displayName } = response.user;
+    const token = await response.user.getIdToken();
+
     return {
       ok: true,
-      uid,
-      photoURL,
+      token,
       displayName,
     };
   } catch (error) {
@@ -70,9 +71,4 @@ export const loginWithEmailAndPassword = async (email: string, password: string)
       errorMessage: error.message,
     };
   }
-};
-
-export const logoutFirebase = async () => {
-  // signOut, este metodo cierra todo ej google, firebase, twitter
-  return await FirebaseAuth.signOut();
 };

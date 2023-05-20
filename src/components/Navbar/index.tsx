@@ -36,11 +36,7 @@ const Navbar: FC = () => {
       route: '/search',
     },
   ];
-  const { dataLogin, handleLogout } = useContext(AuthContext);
-
-  function onLogout(): void {
-    handleLogout('');
-  }
+  const { user, logOut } = useContext(AuthContext);
 
   return (
     <nav className='navbar'>
@@ -57,9 +53,9 @@ const Navbar: FC = () => {
         </div>
 
         <div className='navbar__container-box'>
-          <span>{dataLogin.displayName}</span>
+          <span>{user.displayName}</span>
           <Link to='/login'>
-            <LogOut onClick={onLogout} color={LOGOUT_COLOR} />
+            <LogOut onClick={() => logOut()} color={LOGOUT_COLOR} />
           </Link>
         </div>
       </div>

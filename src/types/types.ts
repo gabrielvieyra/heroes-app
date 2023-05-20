@@ -1,4 +1,17 @@
+export interface UserInfo {
+  token: string | null;
+  status: 'checking' | 'not-authenticated' | 'authenticated';
+  displayName: string;
+  msg: string;
+}
+
 export interface LogUser {
+  email: string;
+  password: string;
+}
+
+export interface RegUser {
+  name: string;
   email: string;
   password: string;
 }

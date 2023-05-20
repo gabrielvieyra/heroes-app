@@ -1,28 +1,21 @@
 import { FC, ReactNode, useState, createContext } from 'react';
+import Cookies from 'js-cookie';
 
 // Firebase
 import {
   registerUserWithEmailAndPassword,
   loginWithEmailAndPassword,
   singInWithGoogle,
-  logoutFirebase,
 } from '../firebase/providers';
-interface AuthState {
-  status: 'checking' | 'not-authenticated' | 'authenticated';
-  uid: string;
-  email: string;
-  displayName: string;
-  photoURL: string;
-  errorMessages?: Array<string>;
-}
+
+// Interfaces
+import { UserInfo, LogUser, RegUser } from '../types/types';
 
 interface AuthContextProps {
-  dataLogin: AuthState;
-  setDataLogin: (value: AuthState) => void;
-  handleLogout: (errorMessage: string) => void;
-  handleLogin: (uid: string, displayName: string, email: string, photoURL: string) => void;
-  onLoginWithCredentials: (email: string, password: string) => void;
-  creatingUserWithEmailAndPassword: (email: string, password: string, fullName: string) => void;
+  user: UserInfo;
+  logOut: () => void;
+  onLoginWithCredentials: (data: LogUser) => void;
+  creatingUserWithEmailAndPassword: (data: RegUser) => void;
   onGoogleSignIn: () => void;
 }
 
@@ -33,95 +26,105 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [dataLogin, setDataLogin] = useState<AuthState>({
+  const [user, setUser] = useState<UserInfo>({
+    token: null,
     status: 'not-authenticated',
-    uid: '',
-    email: '',
     displayName: '',
-    photoURL: '',
-    errorMessages: [],
+    msg: '',
   });
 
   // Cuando disparan el onGoogleSignIn quiere decir que estan intentando autenticarse con google
   // Autentico al usuario o muestro un error
   async function onGoogleSignIn(): Promise<void> {
     checkingCredentials();
-
-    const result = await singInWithGoogle();
-    // Si la autenticacion sale mal reseteamos todo
-    if (!result.ok) {
-      const { errorMessage } = result;
-      handleLogout(errorMessage);
-      return;
-    }
-    // Si todo sale bien, logueamos al usuario
-    const { uid, displayName, email, photoURL } = result;
-    handleLogin(uid!, displayName!, email!, photoURL!);
-  }
-
-  async function onLoginWithCredentials(email: string, password: string): Promise<void> {
-    checkingCredentials();
-    const response = await loginWithEmailAndPassword(email, password);
+    const response = await singInWithGoogle();
     // Si la autenticacion sale mal reseteamos todo
     if (!response.ok) {
       const { errorMessage } = response;
-      handleLogout(errorMessage);
+      signInOrSignUpFailed(errorMessage);
       return;
     }
     // Si todo sale bien, logueamos al usuario
-    const { uid, displayName, photoURL } = response;
-    handleLogin(uid!, displayName!, email, photoURL!);
+    const { displayName, token } = response;
+    signInOrSignUpSuccess(displayName!, token!);
   }
 
-  async function creatingUserWithEmailAndPassword(
-    email: string,
-    password: string,
-    fullName: string
-  ): Promise<void> {
+  async function onLoginWithCredentials(user: LogUser): Promise<void> {
     checkingCredentials();
-    const response = await registerUserWithEmailAndPassword(email, password, fullName);
-    // Si la creacion sale mal reseteamos todo
+    const response = await loginWithEmailAndPassword(user);
+    console.log('response:', response);
+    // Si la autenticacion sale mal reseteamos todo
     if (!response.ok) {
       const { errorMessage } = response;
-      handleLogout(errorMessage);
+      // logFailed(errorMessage);
+      signInOrSignUpFailed(errorMessage);
       return;
     }
     // Si todo sale bien, logueamos al usuario
-    const { uid, displayName, photoURL } = response;
-    handleLogin(uid!, displayName!, email, photoURL!);
+    const { displayName, token } = response;
+    signInOrSignUpSuccess(displayName!, token!);
   }
 
-  function checkingCredentials(): void {
-    setDataLogin({ ...dataLogin, status: 'checking' });
-  }
-
-  async function handleLogout(errorMessage: string): Promise<void> {
-    await logoutFirebase();
-    setDataLogin({
-      ...dataLogin,
-      status: 'not-authenticated',
-      uid: '',
-      email: '',
-      displayName: '',
-      photoURL: '',
-      errorMessages: [errorMessage],
+  function signInOrSignUpSuccess(username: string, token: string): void {
+    Cookies.set('token', token);
+    setUser({
+      ...user,
+      token: Cookies.get('token')!,
+      status: 'authenticated',
+      displayName: username,
+      msg: '',
     });
   }
 
-  function handleLogin(uid: string, displayName: string, email: string, photoURL: string): void {
-    setDataLogin({ ...dataLogin, status: 'authenticated', uid, displayName, email, photoURL });
+  function signInOrSignUpFailed(errorMsg: string): void {
+    Cookies.remove('token');
+    setUser({
+      ...user,
+      token: null,
+      status: 'not-authenticated',
+      displayName: '',
+      msg: errorMsg,
+    });
+  }
+
+  async function creatingUserWithEmailAndPassword(user: RegUser): Promise<void> {
+    checkingCredentials();
+    const response = await registerUserWithEmailAndPassword(user);
+    console.log('response:', response);
+    // Si la creacion sale mal reseteamos todo
+    if (!response.ok) {
+      const { errorMessage } = response;
+      signInOrSignUpFailed(errorMessage);
+      return;
+    }
+    // Si todo sale bien, logueamos al usuario
+    const { displayName, token } = response;
+    signInOrSignUpSuccess(displayName!, token!);
+  }
+
+  function checkingCredentials(): void {
+    setUser({ ...user, status: 'checking' });
+  }
+
+  function logOut(): void {
+    Cookies.remove('token');
+    setUser({
+      ...user,
+      token: null,
+      status: 'not-authenticated',
+      displayName: '',
+      msg: '',
+    });
   }
 
   return (
     <AuthContext.Provider
       value={{
-        dataLogin,
-        setDataLogin,
+        user,
         onLoginWithCredentials,
-        creatingUserWithEmailAndPassword,
         onGoogleSignIn,
-        handleLogout,
-        handleLogin,
+        creatingUserWithEmailAndPassword,
+        logOut,
       }}
     >
       {children}

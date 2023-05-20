@@ -1,5 +1,7 @@
-import { FC, useMemo, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { FormEvent, FC, useState, useMemo, useContext } from 'react';
+
+// Components
+import { Button, Input, ButtonLink, Spinner, Error } from '../../components';
 
 // Context
 import { AuthContext } from '../../context/AuthContext';
@@ -7,86 +9,90 @@ import { AuthContext } from '../../context/AuthContext';
 // Custom hooks
 import { useForm } from '../../hooks/useForm';
 
+// Interfaces
+import { LogUser, FormErrorMsgs } from '../../types/types';
+
 // Styles
 import './styles.scss';
 
-type eventSubmit = React.FormEvent<HTMLFormElement>;
+type submitEvent = FormEvent<HTMLFormElement>;
 
-const Login: FC = () => {
-  const navigate = useNavigate();
-  const { formState, onInputChange } = useForm({
-    email: '',
-    password: '',
-  });
-  const { dataLogin, onLoginWithCredentials, onGoogleSignIn } = useContext(AuthContext);
-  const isAuthenticating = useMemo(() => dataLogin.status === 'checking', [dataLogin.status]);
+const initialState: LogUser = {
+  email: '',
+  password: '',
+};
+
+export const Login: FC = () => {
+  // Variable de estado donde almacenamos los errores
+  const [errors, setErrors] = useState<FormErrorMsgs>({});
+  const { formState, onInputChange } = useForm<LogUser>(initialState);
+  const { user, onLoginWithCredentials, onGoogleSignIn } = useContext(AuthContext);
+  const isAuthenticating = useMemo(() => user.status === 'checking', [user.status]);
 
   // Cuando disparan el handleSubmit quiere decir que estan intentando autenticarse con email y password
-  function handleSubmit(e: eventSubmit): void {
+  function handleSubmit(e: submitEvent): void {
     e.preventDefault();
+    const errors: FormErrorMsgs = {};
 
-    const { email, password } = formState;
-    onLoginWithCredentials(email!, password!);
-    navigate('/marvel');
+    const pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    );
+    if (!pattern.test(formState.email)) {
+      errors.email = 'Correo electrónico no válido';
+    }
+
+    if (formState.password.length < 6) {
+      errors.password = 'La contraseña debe tener al menos 6 caracteres';
+    }
+
+    setErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      onLoginWithCredentials(formState);
+    } else {
+      return;
+    }
   }
 
   return (
     <div className='login'>
-      <h2>Login</h2>
-      {dataLogin.errorMessages!.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {dataLogin.errorMessages!.map((msg, key) => {
-            return (
-              <span key={key} style={{ color: 'red' }}>
-                {msg}
-              </span>
-            );
-          })}
-        </div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <input
-          name='email'
-          type='email'
-          placeholder='E-mail'
-          value={formState.email}
-          onChange={onInputChange}
-        />
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={formState.password}
-          onChange={onInputChange}
-        />
-
-        <div>
-          <button
-            type='submit'
-            style={{ backgroundColor: 'lightcoral' }}
-            disabled={isAuthenticating}
-          >
-            Log In
-          </button>
-          <button
-            type='button'
-            style={{ backgroundColor: 'lightblue' }}
-            onClick={async () => {
-              await onGoogleSignIn();
-              navigate('/marvel');
-            }}
-            disabled={isAuthenticating}
-          >
-            Google
-          </button>
-
-          <Link to='/register'>
-            <span>Crear una cuenta</span>
-          </Link>
-        </div>
-      </form>
+      <div className='login__container'>
+        <h1>Ingresar</h1>
+        {user.msg && <Error>{user.msg}</Error>}
+        <form onSubmit={handleSubmit} className='login__container-form'>
+          <Input
+            placeholder='Email'
+            name='email'
+            type='email'
+            value={formState.email}
+            onChange={onInputChange}
+            error={errors.email ? true : false}
+            errorMsg={errors.email}
+          />
+          <Input
+            placeholder='Contraseña'
+            name='password'
+            type='password'
+            value={formState.password}
+            onChange={onInputChange}
+            error={errors.password ? true : false}
+            errorMsg={errors.password}
+          />
+          <Button type='submit' disabled={isAuthenticating}>
+            {user.status === 'checking' ? (
+              <div className='login__container-form-spinner'>
+                <Spinner />
+              </div>
+            ) : (
+              'Ingresar'
+            )}
+          </Button>
+          <Button type='button' disabled={isAuthenticating} onClick={onGoogleSignIn}>
+            Ingresar con Google
+          </Button>
+          <ButtonLink route='/register'>Crear una cuenta</ButtonLink>
+        </form>
+      </div>
     </div>
   );
 };
-
-export default Login;
