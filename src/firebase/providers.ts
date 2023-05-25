@@ -31,11 +31,11 @@ export const singInWithGoogle = async () => {
 };
 
 export const registerUserWithEmailAndPassword = async (user: RegUser) => {
-  const { email, password, name } = user;
+  const { email, password, username } = user;
   try {
     const response = await createUserWithEmailAndPassword(FirebaseAuth, email, password);
     // Actualizamos el displayName en Firebase
-    await updateProfile(FirebaseAuth.currentUser!, { displayName: name });
+    await updateProfile(FirebaseAuth.currentUser!, { displayName: username });
     const { displayName } = response.user;
     const token = await response.user.getIdToken();
 

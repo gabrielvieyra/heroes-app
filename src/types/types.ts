@@ -2,7 +2,7 @@ export interface UserInfo {
   token: string | null;
   status: 'checking' | 'not-authenticated' | 'authenticated';
   displayName: string;
-  msg: string;
+  errorMsg: string;
 }
 
 export interface LogUser {
@@ -11,12 +11,13 @@ export interface LogUser {
 }
 
 export interface RegUser {
-  name: string;
+  username: string;
   email: string;
   password: string;
 }
 
 export interface FormErrorMsgs {
+  username?: string;
   email?: string;
   password?: string;
 }

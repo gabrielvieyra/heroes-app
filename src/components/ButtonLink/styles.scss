@@ -1,6 +1,7 @@
 .button-link {
   color: var(--black);
   text-align: center;
+  font-weight: var(--font-weight-bold);
 
   &:hover {
     text-decoration-line: underline;

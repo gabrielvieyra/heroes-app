@@ -26,6 +26,14 @@
         display: flex;
         justify-content: center;
       }
+
+      &-description {
+        text-align: center;
+
+        a {
+          margin-left: 0.25rem; //4px
+        }
+      }
     }
   }
 }

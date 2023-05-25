@@ -26,7 +26,7 @@ export const Login: FC = () => {
   // Variable de estado donde almacenamos los errores
   const [errors, setErrors] = useState<FormErrorMsgs>({});
   const { formState, onInputChange } = useForm<LogUser>(initialState);
-  const { user, onLoginWithCredentials, onGoogleSignIn } = useContext(AuthContext);
+  const { user, onLoginWithCredentials, onGoogleSignIn, removeErrorMsg } = useContext(AuthContext);
   const isAuthenticating = useMemo(() => user.status === 'checking', [user.status]);
 
   // Cuando disparan el handleSubmit quiere decir que estan intentando autenticarse con email y password
@@ -58,7 +58,7 @@ export const Login: FC = () => {
     <div className='login'>
       <div className='login__container'>
         <h1>Ingresar</h1>
-        {user.msg && <Error>{user.msg}</Error>}
+        {user.errorMsg && <Error>{user.errorMsg}</Error>}
         <form onSubmit={handleSubmit} className='login__container-form'>
           <Input
             placeholder='Email'
@@ -90,7 +90,12 @@ export const Login: FC = () => {
           <Button type='button' disabled={isAuthenticating} onClick={onGoogleSignIn}>
             Ingresar con Google
           </Button>
-          <ButtonLink route='/register'>Crear una cuenta</ButtonLink>
+          <p className='login__container-form-description'>
+            ¿No tienes cuenta?
+            <ButtonLink route='/register' onClick={removeErrorMsg}>
+              Registrarse
+            </ButtonLink>
+          </p>
         </form>
       </div>
     </div>

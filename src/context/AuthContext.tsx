@@ -17,6 +17,7 @@ interface AuthContextProps {
   onLoginWithCredentials: (data: LogUser) => void;
   creatingUserWithEmailAndPassword: (data: RegUser) => void;
   onGoogleSignIn: () => void;
+  removeErrorMsg: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);
@@ -30,7 +31,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     token: null,
     status: 'not-authenticated',
     displayName: '',
-    msg: '',
+    errorMsg: '',
   });
 
   // Cuando disparan el onGoogleSignIn quiere decir que estan intentando autenticarse con google
@@ -71,7 +72,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       token: Cookies.get('token')!,
       status: 'authenticated',
       displayName: username,
-      msg: '',
+      errorMsg: '',
     });
   }
 
@@ -82,12 +83,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       token: null,
       status: 'not-authenticated',
       displayName: '',
-      msg: errorMsg,
+      errorMsg,
     });
   }
 
   async function creatingUserWithEmailAndPassword(user: RegUser): Promise<void> {
     checkingCredentials();
+    registerUserWithEmailAndPassword(user);
     const response = await registerUserWithEmailAndPassword(user);
     // Si la creacion sale mal reseteamos todo
     if (!response.ok) {
@@ -104,6 +106,10 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     setUser({ ...user, status: 'checking' });
   }
 
+  function removeErrorMsg(): void {
+    setUser({ ...user, errorMsg: '' });
+  }
+
   function logOut(): void {
     Cookies.remove('token');
     setUser({
@@ -111,7 +117,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       token: null,
       status: 'not-authenticated',
       displayName: '',
-      msg: '',
+      errorMsg: '',
     });
   }
 
@@ -123,6 +129,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         onGoogleSignIn,
         creatingUserWithEmailAndPassword,
         logOut,
+        removeErrorMsg,
       }}
     >
       {children}
