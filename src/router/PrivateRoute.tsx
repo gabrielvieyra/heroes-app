@@ -1,16 +1,18 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-// Context
-import { AuthContext } from '../context/AuthContext';
+// Components
+import { Layout } from '../components';
 
 export const PrivateRoute: FC = () => {
-  const { dataLogin } = useContext(AuthContext);
-
-  if (dataLogin.status === 'not-authenticated') {
-    return <Navigate to='/login' />;
-  }
+  const token = Cookies.get('token');
+  if (!token) return <Navigate to='/login' />;
 
   // Si estoy autenticado significa que puedo mostrar las rutas privadas
-  return <Outlet />;
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
 };

@@ -1,10 +1,7 @@
-import { FC, ReactNode, useContext } from 'react';
+import { FC, ReactNode } from 'react';
 
 // Components
 import { Navbar, Footer } from '../index';
-
-// Context
-import { AuthContext } from '../../context/AuthContext';
 
 // Styles
 import './styles.scss';
@@ -14,13 +11,11 @@ interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
-  const { dataLogin } = useContext(AuthContext);
-
   return (
     <div className='layout'>
-      {dataLogin.status === 'authenticated' && <Navbar />}
+      <Navbar />
       <main className='layout__children'>{children}</main>
-      {dataLogin.status === 'authenticated' && <Footer />}
+      <Footer />
     </div>
   );
 };

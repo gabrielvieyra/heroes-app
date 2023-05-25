@@ -7,6 +7,8 @@ import {
   loginWithEmailAndPassword,
   singInWithGoogle,
 } from '../firebase/providers';
+import { onAuthStateChanged } from 'firebase/auth';
+import { FirebaseAuth } from '../firebase/config';
 
 // Interfaces
 import { UserInfo, LogUser, RegUser } from '../types/types';
@@ -14,9 +16,10 @@ import { UserInfo, LogUser, RegUser } from '../types/types';
 interface AuthContextProps {
   user: UserInfo;
   logOut: () => void;
-  onLoginWithCredentials: (data: LogUser) => void;
   creatingUserWithEmailAndPassword: (data: RegUser) => void;
+  onLoginWithCredentials: (data: LogUser) => void;
   onGoogleSignIn: () => void;
+  authUser: () => void;
   removeErrorMsg: () => void;
 }
 
@@ -33,6 +36,18 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     displayName: '',
     errorMsg: '',
   });
+
+  function authUser(): void {
+    onAuthStateChanged(FirebaseAuth, userInfo => {
+      setUser({
+        ...user,
+        token: Cookies.get('token')!,
+        status: 'authenticated',
+        displayName: userInfo!.displayName!,
+        errorMsg: '',
+      });
+    });
+  }
 
   // Cuando disparan el onGoogleSignIn quiere decir que estan intentando autenticarse con google
   // Autentico al usuario o muestro un error
@@ -89,7 +104,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   async function creatingUserWithEmailAndPassword(user: RegUser): Promise<void> {
     checkingCredentials();
-    registerUserWithEmailAndPassword(user);
     const response = await registerUserWithEmailAndPassword(user);
     // Si la creacion sale mal reseteamos todo
     if (!response.ok) {
@@ -130,6 +144,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         creatingUserWithEmailAndPassword,
         logOut,
         removeErrorMsg,
+        authUser,
       }}
     >
       {children}
