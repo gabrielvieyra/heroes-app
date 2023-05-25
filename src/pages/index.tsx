@@ -1,9 +1,8 @@
-import Marvel from './Marvel';
-import Dc from './Dc';
-import Hero from './Hero';
-import Search from './Search';
 import { Login } from './Login';
 import Register from './Register';
 import { NotFound } from './NotFound';
+import { Home } from './Home';
+import Search from './Search';
+import { HeroDetail } from './HeroDetail';
 
-export { Marvel, Dc, Hero, Search, Login, Register, NotFound };
+export { Login, Register, NotFound, Home, Search, HeroDetail };

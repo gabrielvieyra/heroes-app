@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 // Pages
-import { Marvel, Dc, Hero, Search, Login, Register, NotFound } from '../pages/index';
+import { Home, HeroDetail, Search, Login, Register, NotFound } from '../pages/index';
 
 // Components
 import { PrivateRoute } from './PrivateRoute';
@@ -26,10 +26,9 @@ export const AppRouter = () => {
       {/* Cuando tenemos componentes que tienen el mismo nivel de autorizacion ej en este caso cuando un usuario se autentica tiene acceso a todo */}
       <Route element={<PrivateRoute />}>
         {/* Con la barra vacia lo que hacemos es que cuando el usuario no escriba nada vaya al element que definimos por defecto */}
-        <Route path='/' element={<Marvel />} />
-        <Route path='/dc' element={<Dc />} />
+        <Route path='/' element={<Home />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/hero/:id' element={<Hero />} />
+        <Route path='/hero/:id' element={<HeroDetail />} />
       </Route>
 
       <Route element={<PublicRoute />}>
