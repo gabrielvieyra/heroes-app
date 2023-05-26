@@ -1,78 +1,71 @@
-import { FC } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
+import { FC, FormEvent, useState } from 'react';
 
 // Components
-import { HeroeCard } from '../../components/index';
+import { Button, Error, Spinner } from '../../components/index';
 
-// Custom hooks
-import { useForm } from '../../hooks/useForm';
+// Services
+import { getHeroesByName } from '../../services';
 
-// Helpers
-import { getHeroesByName } from '../../helpers/index';
+// Interfaces
+import { Hero } from '../../types/types';
 
 // Styles
 import './styles.scss';
 
+type submitEvent = FormEvent<HTMLFormElement>;
+type Status = 'IDLE' | 'LOADING' | 'ERROR' | 'SUCCESS';
+
 const Search: FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [error, setError] = useState<boolean>(false);
+  const [status, setStatus] = useState<Status>('IDLE');
+  const [heroes, setHeroes] = useState<Array<Hero>>([]);
 
-  // queryString me permite extraer todo lo que se encuentra en el objeto search del location
-  const { q = '' } = queryString.parse(location.search);
-  const heroes = getHeroesByName(q);
-
-  const showSearch = q?.length === 0;
-  const showError = q?.length > 0 && heroes.length === 0;
-
-  const { formState, onInputChange } = useForm({
-    searchText: q,
-  });
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+  function handleSubmit(e: submitEvent): void {
     e.preventDefault();
-    navigate(`/search?q=${formState.searchText}`);
+
+    const searchValue: string = e.currentTarget.search.value;
+    if (searchValue.trim().length === 0) {
+      setError(true);
+    } else {
+      setError(false);
+      setStatus('LOADING');
+      setHeroes([]);
+      getHeroesByName(searchValue)
+        .then(heroes => {
+          if (heroes) {
+            setStatus('SUCCESS');
+            setHeroes(heroes);
+            console.log('heroes:', heroes);
+          } else {
+            setStatus('ERROR');
+          }
+        })
+        .catch(err => console.log(err));
+    }
   }
 
   return (
-    <div className='search'>
-      <h2>Search</h2>
-      <div className='search__container'>
-        <form onSubmit={handleSubmit}>
-          <input
-            type='text'
-            placeholder='Search a hero'
-            name='searchText'
-            autoComplete='off'
-            value={formState.searchText}
-            onChange={onInputChange}
-          />
-          <button>Search</button>
-        </form>
-
-        <div className='search__container-results'>
-          <h4>Results</h4>
-          {<h6 style={{ display: showSearch ? 'block' : 'none' }}>Search a hero</h6>}
-
-          <h6 style={{ display: showError ? 'block' : 'none' }}>
-            No hero with <b>{q}</b>
-          </h6>
-
-          {heroes.map((heroe, key) => {
-            const { id, superhero, alterEgo, firstAppearance } = heroe;
-            return (
-              <HeroeCard
-                key={id ? id : key}
-                id={id}
-                superhero={superhero}
-                alterEgo={alterEgo}
-                firstAppearance={firstAppearance}
-              />
-            );
-          })}
+    <section className='search'>
+      <h1>Busca a tus héroes</h1>
+      <form onSubmit={handleSubmit} className='search__form'>
+        <div className='search__form-container'>
+          <input type='text' placeholder='EJ: Batman' name='search' autoComplete='off' />
+          <Button type='submit'>Buscar</Button>
         </div>
-      </div>
-    </div>
+        {error && <Error>El campo no puede estar vacío, escribe un héroe</Error>}
+      </form>
+      {status === 'LOADING' && (
+        <div className='search__spinner'>
+          <Spinner size='medium' color='blue' />
+        </div>
+      )}
+      {status === 'ERROR' && <h1>No se encontró el héroe que buscas</h1>}
+      {heroes.length > 0 && (
+        <div className='search__results'>
+          <h1>Mostrar heroes</h1>
+        </div>
+      )}
+    </section>
   );
 };
 
