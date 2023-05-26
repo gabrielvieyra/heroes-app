@@ -3,6 +3,11 @@ import { FC } from 'react';
 // Styles
 import './styles.scss';
 
-export const Spinner: FC = () => {
-  return <div className='spinner'></div>;
+interface SpinnerProps {
+  size?: 'small' | 'medium';
+  color?: 'white' | 'blue';
+}
+
+export const Spinner: FC<SpinnerProps> = ({ size = 'small', color = 'white' }) => {
+  return <div className={`spinner spinner--${size} spinner--${color}`}></div>;
 };

@@ -1,10 +1,29 @@
 .spinner {
-  border: 2px solid var(--white);
-  border-top: 2px solid transparent;
+  border-style: solid;
   border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
   animation: spin 1s linear infinite;
+
+  &--small {
+    width: 1.5rem; //24px
+    height: 1.5rem; //24px
+    border-width: 2px;
+  }
+
+  &--medium {
+    width: 3rem; //48px
+    height: 3rem; //48px
+    border-width: 5px;
+  }
+
+  &--white {
+    border-color: var(--white);
+    border-top-color: transparent;
+  }
+
+  &--blue {
+    border-color: var(--light-blue);
+    border-top-color: var(--dark-blue);
+  }
 }
 
 @keyframes spin {

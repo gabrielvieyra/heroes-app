@@ -24,11 +24,11 @@ const LOGOUT_COLOR: string = '#04121d';
 const Navbar: FC = () => {
   const links: Array<NavbarLink> = [
     {
-      label: 'Team',
+      label: 'Tu Equipo',
       route: '/',
     },
     {
-      label: 'Search',
+      label: 'Buscar héroes',
       route: '/search',
     },
   ];
