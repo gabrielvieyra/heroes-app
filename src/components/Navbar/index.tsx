@@ -2,7 +2,7 @@ import { FC, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 // Components
-import NavbarItem from '../Navbar/NavbarItem/index';
+import { NavbarItem } from './NavbarItem';
 import { Logo } from '../Logo';
 
 // Context
@@ -19,12 +19,12 @@ interface NavbarLink {
   route: string;
 }
 
-const LOGOUT_COLOR: string = '#04121d';
+const LOGOUT_COLOR = '#04121d';
 
-const Navbar: FC = () => {
+export const Navbar: FC = () => {
   const links: Array<NavbarLink> = [
     {
-      label: 'Tu Equipo',
+      label: 'Equipo',
       route: '/',
     },
     {
@@ -58,5 +58,3 @@ const Navbar: FC = () => {
     </nav>
   );
 };
-
-export default Navbar;

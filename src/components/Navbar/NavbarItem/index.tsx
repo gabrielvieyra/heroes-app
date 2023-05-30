@@ -9,7 +9,7 @@ interface NavbarItemProps {
   route: string;
 }
 
-const NavbarItem: FC<NavbarItemProps> = ({ label, route }) => {
+export const NavbarItem: FC<NavbarItemProps> = ({ label, route }) => {
   return (
     <li className='navbar-item'>
       <NavLink
@@ -23,5 +23,3 @@ const NavbarItem: FC<NavbarItemProps> = ({ label, route }) => {
     </li>
   );
 };
-
-export default NavbarItem;
