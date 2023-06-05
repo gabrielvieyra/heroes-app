@@ -1,0 +1,25 @@
+.hero-card {
+  width: 16.25rem; //260px
+  height: auto;
+  padding: 0.625rem; //10px
+  border: 1px solid var(--light-grey);
+  border-radius: 1rem; //16px
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; //8px
+
+  h2 {
+    text-align: center;
+
+    // truncar titulo
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &__photo {
+    width: 100%;
+    height: 15rem; //240px
+    border-radius: 0.5rem; //8px
+  }
+}

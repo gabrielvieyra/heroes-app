@@ -9,13 +9,11 @@ import { Spinner } from './Spinner';
 import { Error } from './Error';
 import { HeroNotFound } from './HeroNotFound';
 import { EmptyState } from './EmptyState';
-import HeroeCard from './HeroeCard';
-import Info from './Info';
+import { HeroCard } from './HeroCard';
+import { Powerstats } from './Powerstats';
 
 export {
   Navbar,
-  HeroeCard,
-  Info,
   Layout,
   Footer,
   Logo,
@@ -26,4 +24,6 @@ export {
   Error,
   HeroNotFound,
   EmptyState,
+  HeroCard,
+  Powerstats,
 };
