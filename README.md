@@ -16,10 +16,10 @@ Proyecto creado con react que te permite crear tu propio equipo de héroes. Para
   - Muestra un listado de cards con los miembros del equipo con nombre, imagen, powerstats, botones para ver más detalles del héroe o eliminarlo del equipo
   - Muestra la suma de los powerstats de los integrantes del equipo ordenados de mayor a menor
   - Muestra un aviso si no hay ningun heroe en el equipo
-- Buscador de héroes: (TODO)
+- Buscador de héroes:
   - Vas a poder buscar a tus héroes favoritos y agregarlos a tu equipo
-  - Si se busca por un texto ej "messi" y no hay ningun heroe que coincida con dicho texto se deberá mostrar un mensaje del tipo "No hay ningún héroe que coincida con la palabra messi"
-  - Al realizar una búsqueda no se tendrá en cuenta si la persona ha introducido el texto en mayusculas o minusculas
+  - Si se busca por un texto ej "messi" y no hay ningun heroe que coincida con dicho texto se muestra un mensaje comentando que el héroe que está buscando no se encontró
+  - Al realizar una búsqueda no se tendrá en cuenta si la persona ha introducido el texto en mayúsculas o minúsculas
 - Cada vez que el usuario intente agregar un héroe al equipo se valida que: (TODO)
   - El personaje no forme parte del equipo
   - No se haya alcanzado el límite de seis miembros
@@ -30,7 +30,7 @@ Proyecto creado con react que te permite crear tu propio equipo de héroes. Para
 - La información se obtiene desde una API
 - Creacion e implementacion de custom hooks con el fin de optimizar el código
 - Manejo de las rutas con React Router Dom
-- Manejo del estado de la aplicación mediante Context api
+- Manejo del estado de la aplicación mediante Context API
 - La página web es responsive (TODO)
 
 ### Usuario para ingresar:
@@ -80,18 +80,20 @@ TODO: Captura de pantalla 02
 - Organizacion del proyecto:
 
 - TODO:
-- pagina Home, Detalle? / Buscador / Responsive / Responsive (menu mobile)
-- diseño de la pagina hero (revisar scss)
-- diseño de la pagina de busqueda (revisar scss)
+- componnete alert a mano o usar alguna libreria / validaciones al agregar un heroe (seguir chusmeando a mati)
+- diseño de la pagina hero / home
+
 - tests unitarios del curso de react?
 
+cuando vuelvo para atras que este lo que estaba buscando
+
 - Commits:
-- actualizo el readme
+- asasa
 
 - Referentes:
 - https://github.com/jmsanchezdiaz/heroes-app-alkemy/blob/main/src/customHooks/useSpreadContext.ts
 - https://github.com/ezegonzalez912/alkemy-heroes-app/tree/main/src / https://github.com/ezegonzalez912/challenge-alkemy-v2
 - https://github.com/livchits/superheroes-app/tree/89c5097948872ab5dd90ea2c2b7c13fbc3920be8 (challenge@alkemy.org / react)
 
-- matias baldanza (a partir del 35 / hasta la 31 se vio)
+- matias baldanza (a partir del 35 / hasta la 31 se vio / repasar dia 6 de su todo)
 -->
