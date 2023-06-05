@@ -53,7 +53,7 @@ export interface Image {
   url: string;
 }
 
-export interface Powerstats {
+export interface PowerstatsI {
   combat: string;
   durability: string;
   intelligence: string;
@@ -74,6 +74,6 @@ export interface Hero {
   id: string;
   image: Image;
   name: string;
-  powerstats: Powerstats;
+  powerstats: PowerstatsI;
   work: Work;
 }

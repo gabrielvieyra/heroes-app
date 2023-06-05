@@ -1,0 +1,29 @@
+.powerstats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; //4px
+
+  &__container {
+    &-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        text-transform: capitalize;
+      }
+    }
+
+    &-progress-bar {
+      width: 100%;
+      height: 0.625rem; //10px
+      border-radius: 0.5rem; //8px
+      background-color: var(--light-blue);
+
+      &-percent {
+        height: 100%;
+        border-radius: 0.5rem; //8px
+        background-color: var(--dark-blue);
+      }
+    }
+  }
+}
