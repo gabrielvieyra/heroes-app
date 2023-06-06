@@ -27,7 +27,7 @@ export const HeroCard: FC<HeroCardProps> = ({ hero, isSearchItem = false }) => {
       <img alt={name} src={image.url} className='hero-card__photo' />
       {!isSearchItem && <Powerstats powerstats={powerstats} />}
       {heroIsAlreadyInTeam(hero) ? (
-        <Button variant='delete' onClick={() => deleteHero(id)}>
+        <Button variant='delete' onClick={() => deleteHero(hero)}>
           Eliminar
         </Button>
       ) : (
