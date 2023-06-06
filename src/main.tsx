@@ -5,13 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 
 // Provider
 import { AuthProvider } from './context/AuthContext';
+import { HeroesProvider } from './context/HeroesContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <AuthProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <HeroesProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HeroesProvider>
     </AuthProvider>
   </React.StrictMode>
 );

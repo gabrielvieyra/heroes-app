@@ -18,7 +18,7 @@ interface HeroCardProps {
 }
 
 export const HeroCard: FC<HeroCardProps> = ({ hero, isSearchItem = false }) => {
-  const { name, image, powerstats } = hero;
+  const { name, image, id, powerstats } = hero;
   const { addHero, deleteHero, heroIsAlreadyInTeam } = useContext(HeroesContext);
 
   return (
@@ -27,7 +27,7 @@ export const HeroCard: FC<HeroCardProps> = ({ hero, isSearchItem = false }) => {
       <img alt={name} src={image.url} className='hero-card__photo' />
       {!isSearchItem && <Powerstats powerstats={powerstats} />}
       {heroIsAlreadyInTeam(hero) ? (
-        <Button variant='delete' onClick={() => deleteHero(hero.id)}>
+        <Button variant='delete' onClick={() => deleteHero(id)}>
           Eliminar
         </Button>
       ) : (
