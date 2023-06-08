@@ -18,3 +18,13 @@ export const getHeroesByName = (heroName: string): Promise<Array<Hero>> => {
       throw new Error(err);
     });
 };
+
+export const getHeroById = (heroId: string): Promise<Hero> => {
+  const url = `${BASE_URL}${TOKEN}/${heroId}`;
+  return axios
+    .get(url)
+    .then(response => response.data)
+    .catch(err => {
+      throw new Error(err);
+    });
+};
