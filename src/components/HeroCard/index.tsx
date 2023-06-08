@@ -1,4 +1,5 @@
 import { FC, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Components
 import { Button, Powerstats } from '../../components/index';
@@ -20,6 +21,7 @@ interface HeroCardProps {
 export const HeroCard: FC<HeroCardProps> = ({ hero, isSearchItem = false }) => {
   const { name, image, id, powerstats } = hero;
   const { addHero, deleteHero, heroIsAlreadyInTeam } = useContext(HeroesContext);
+  const navigate = useNavigate();
 
   return (
     <div className='hero-card'>
@@ -33,7 +35,9 @@ export const HeroCard: FC<HeroCardProps> = ({ hero, isSearchItem = false }) => {
       ) : (
         <Button onClick={() => addHero(hero)}>Agregar</Button>
       )}
-      <Button variant='secundary'>Detalles</Button>
+      <Button variant='secundary' onClick={() => navigate(`/hero/${id}`)}>
+        Detalles
+      </Button>
     </div>
   );
 };
