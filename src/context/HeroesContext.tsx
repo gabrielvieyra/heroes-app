@@ -28,19 +28,50 @@ export const HeroesProvider: FC<HeroesProviderProps> = ({ children }) => {
     localStorage.setItem('team', JSON.stringify(team));
   }, [team]);
 
+  const isTeamFull: boolean = team.length >= 6;
+
   // Validamos si el heroe ya esta en el equipo o no
   function heroIsAlreadyInTeam(hero: Hero): boolean {
     return team.some(({ id }) => id === hero.id);
   }
 
+  function isAligmentFull(hero: Hero): boolean {
+    const quantityMatchingAlignmentHeroes = team.filter(
+      ({ biography }) => biography.alignment === hero.biography.alignment
+    ).length;
+    return quantityMatchingAlignmentHeroes >= 3;
+  }
+
+  function heroIsOkToAdd(hero: Hero): boolean {
+    return !isTeamFull && !isAligmentFull(hero);
+  }
+
+  function errorHandling(hero: Hero): string {
+    const { biography } = hero;
+    if (isAligmentFull(hero)) {
+      return `Tu equipo ya cuenta con 3 héroes con orientación ${biography.alignment}`;
+    } else if (isTeamFull) {
+      return 'Tu equipo esta completo';
+    } else {
+      return 'Error desconocido';
+    }
+  }
+
   // Agregar heroe al equipo
   function addHero(hero: Hero): void {
-    setTeam([...team, hero]);
-    // React Toastify
-    toast.success(`El heroe ${hero.name} ha sido agregado exitosamente`, {
-      position: 'bottom-center',
-      autoClose: 3000,
-    });
+    if (heroIsOkToAdd(hero)) {
+      setTeam([...team, hero]);
+      // React Toastify
+      toast.success(`El heroe ${hero.name} ha sido agregado exitosamente`, {
+        position: 'bottom-center',
+        autoClose: 3000,
+      });
+    } else {
+      toast.error(`${errorHandling(hero)}`, {
+        position: 'bottom-center',
+        autoClose: 3000,
+      });
+    }
   }
 
   // Eliminar heroe del equipo
