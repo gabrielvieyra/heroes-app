@@ -14,19 +14,21 @@ Proyecto creado con react que te permite crear tu propio equipo de héroes. Para
   - El formulario de registro muestra un mensaje de error si algunos de los inputs están vacíos, si alguno de los datos enviados no son correctos, si ocurrio algun error que no permitió realizar la petición
 - Home: (TODO)
   - Muestra un listado de cards con los miembros del equipo con nombre, imagen, powerstats, botones para ver más detalles del héroe o eliminarlo del equipo
+  - Muestra cual es la habilidad mas fuerte del equipo
   - Muestra la suma de los powerstats de los integrantes del equipo ordenados de mayor a menor
+  - Muestra el peso y la altura promedio del equipo
   - Muestra un aviso si no hay ningun heroe en el equipo
 - Buscador de héroes:
   - Vas a poder buscar a tus héroes favoritos y agregarlos a tu equipo
   - Si se busca por un texto ej "messi" y no hay ningun heroe que coincida con dicho texto se muestra un mensaje comentando que el héroe que está buscando no se encontró
   - Al realizar una búsqueda no se tendrá en cuenta si la persona ha introducido el texto en mayúsculas o minúsculas
-- Cada vez que el usuario intente agregar un héroe al equipo se valida que: (TODO)
+- Cada vez que el usuario intente agregar un héroe al equipo se valida que:
   - El personaje no forme parte del equipo
   - No se haya alcanzado el límite de seis miembros
   - No se haya alcanzado el límite de tres miembros con orientación buena, ni de tres con orientación mala
   - En el caso de no pasar alguna validación de estas, al intentar agregar un héroe se va a informar cual es el error
-- Detalles de los heroes: (TODO)
-  - Entre los detalles de los héroes se muestran algunos aspectos como título, descripción, genero, imagenes, reparto, puntaje
+- Detalles de los heroes:
+  - Entre los detalles de los héroes se muestran algunos aspectos como nombre, alter egos, alineación, lugar de trabajo, altura, peso, color de pelo, color de los ojos
 - La información se obtiene desde una API
 - Creacion e implementacion de custom hooks con el fin de optimizar el código
 - Manejo de las rutas con React Router Dom
@@ -80,20 +82,16 @@ TODO: Captura de pantalla 02
 - Organizacion del proyecto:
 
 - TODO:
-- componnete alert a mano o usar alguna libreria / validaciones al agregar un heroe (seguir chusmeando a mati)
-- diseño de la pagina hero / home
+- diseño de la pagina home / cuando vuelvo para atras que este lo que estaba buscando / deployarlo / responsive
 
 - tests unitarios del curso de react?
 
-cuando vuelvo para atras que este lo que estaba buscando
-
 - Commits:
+- actualizo el readme
 - asasa
 
 - Referentes:
 - https://github.com/jmsanchezdiaz/heroes-app-alkemy/blob/main/src/customHooks/useSpreadContext.ts
 - https://github.com/ezegonzalez912/alkemy-heroes-app/tree/main/src / https://github.com/ezegonzalez912/challenge-alkemy-v2
 - https://github.com/livchits/superheroes-app/tree/89c5097948872ab5dd90ea2c2b7c13fbc3920be8 (challenge@alkemy.org / react)
-
-- matias baldanza (a partir del 35 / hasta la 31 se vio / repasar dia 6 de su todo)
 -->
