@@ -1,7 +1,7 @@
 import { FC, FormEvent, useState } from 'react';
 
 // Components
-import { Button, Error, Spinner } from '../../components/index';
+import { Button, Error, Spinner, HeroNotFound, HeroCard } from '../../components/index';
 
 // Services
 import { getHeroesByName } from '../../services';
@@ -24,6 +24,7 @@ const Search: FC = () => {
     e.preventDefault();
 
     const searchValue: string = e.currentTarget.search.value;
+    // VALIDACION: Si el campo de texto esta vacio, notificamos al usuario
     if (searchValue.trim().length === 0) {
       setError(true);
     } else {
@@ -35,7 +36,6 @@ const Search: FC = () => {
           if (heroes) {
             setStatus('SUCCESS');
             setHeroes(heroes);
-            console.log('heroes:', heroes);
           } else {
             setStatus('ERROR');
           }
@@ -59,10 +59,12 @@ const Search: FC = () => {
           <Spinner size='medium' color='blue' />
         </div>
       )}
-      {status === 'ERROR' && <h1>No se encontró el héroe que buscas</h1>}
+      {status === 'ERROR' && <HeroNotFound />}
       {heroes.length > 0 && (
         <div className='search__results'>
-          <h1>Mostrar heroes</h1>
+          {heroes.map(hero => {
+            return <HeroCard key={hero.id} hero={hero} isSearchItem={true} />;
+          })}
         </div>
       )}
     </section>
