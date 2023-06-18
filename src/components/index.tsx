@@ -11,6 +11,8 @@ import { HeroNotFound } from './HeroNotFound';
 import { EmptyState } from './EmptyState';
 import { HeroCard } from './HeroCard';
 import { Powerstats } from './Powerstats';
+import { ProgressBar } from './ProgressBar';
+import { Appearance } from './Appearance';
 
 export {
   Navbar,
@@ -26,4 +28,6 @@ export {
   EmptyState,
   HeroCard,
   Powerstats,
+  ProgressBar,
+  Appearance,
 };
