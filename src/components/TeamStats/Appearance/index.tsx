@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 
 // Interfaces
-import { Hero } from '../../types/types';
+import { Hero } from '../../../types/types';
 
 // Styles
 import './styles.scss';
@@ -38,7 +38,7 @@ export const Appearance: FC<AppearanceProps> = ({ team }) => {
         weight: parseInt(appearance.weight[1]),
       };
     });
-    
+
     // Obtenemos el peso y altura promedio
     for (const hero of physicalStats) {
       averages = {

@@ -12,7 +12,8 @@ import { EmptyState } from './EmptyState';
 import { HeroCard } from './HeroCard';
 import { Powerstats } from './Powerstats';
 import { ProgressBar } from './ProgressBar';
-import { Appearance } from './Appearance';
+import { Appearance } from './TeamStats/Appearance';
+import { TeamStats } from './TeamStats';
 
 export {
   Navbar,
@@ -30,4 +31,5 @@ export {
   Powerstats,
   ProgressBar,
   Appearance,
+  TeamStats,
 };

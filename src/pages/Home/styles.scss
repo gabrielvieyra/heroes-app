@@ -2,15 +2,27 @@
   width: 80%;
   margin: 1.5rem auto;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem; //16px
 
-  &__team {
+  &__container {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.75rem; //12px
+    flex-direction: column;
+    gap: 1rem; //16px
+
+    h1,
+    h4 {
+      text-align: center;
+    }
+
+    h4 span {
+      font-weight: var(--font-weight-medium);
+      text-transform: capitalize;
+    }
+
+    &-team {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem; //12px
+    }
   }
 }
