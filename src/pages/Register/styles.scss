@@ -1,3 +1,6 @@
+@import '../../styles/variables.scss';
+@import '../../styles/media-queries.scss';
+
 .register {
   display: flex;
   justify-content: center;
@@ -15,6 +18,10 @@
     box-shadow: rgba(100, 116, 139, 0.12) 0px 10px 15px;
     padding: 2rem; //32px
     gap: 0.875rem; //14px
+
+    @include tablet {
+      width: 90%;
+    }
 
     &-form {
       width: 100%;

@@ -1,3 +1,6 @@
+@import '../../styles/variables.scss';
+@import '../../styles/media-queries.scss';
+
 .hero-detail {
   width: 80%;
   margin: 1.5rem auto;
@@ -10,9 +13,17 @@
     display: flex;
     gap: 1.25rem; //20px
 
+    @include mobile {
+      flex-direction: column;
+    }
+
     img {
       height: 25rem; //400px
       border-radius: 1.25rem; //20px
+
+      @include mobile {
+        height: 18rem; //288px
+      }
     }
 
     &-info {

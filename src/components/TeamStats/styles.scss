@@ -1,7 +1,20 @@
+@import '../../styles/variables.scss';
+@import '../../styles/media-queries.scss';
+
 .team-stats {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 1.5rem; //24px
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+
+  h2 {
+    @include tablet {
+      text-align: center;
+    }
+  }
 
   &__powerstats {
   }

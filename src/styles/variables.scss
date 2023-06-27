@@ -10,6 +10,10 @@
   --font-size-lg: 1.5rem; //24px
   --font-size-xl: 2rem; //32px
 
+  // Font-weight
+  --font-weight-medium: 500; //medium
+  --font-weight-bold: 700; //bold
+
   // Colors
   --white: #fff;
   --black: #04121d;
@@ -23,8 +27,11 @@
   --light-blue: #cde2f5;
 
   --light-grey: #808080;
-
-  // Font-weight
-  --font-weight-medium: 500; //medium
-  --font-weight-bold: 700; //bold
 }
+
+// Breakpoints
+$breakpoint-sm: 480px; //mobile
+$breakpoint-md: 768px; //tablet
+$breakpoint-lg: 1024px; //notebooks
+$breakpoint-xl: 1440px; //large screens
+$breakpoint-xxl: 1660px; //extra large screens
