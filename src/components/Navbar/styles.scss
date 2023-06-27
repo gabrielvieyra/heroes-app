@@ -1,8 +1,10 @@
 @import '../../styles/variables.scss';
+@import '../../styles/media-queries.scss';
 
 .navbar {
   width: 100%;
   background-color: var(--light-blue);
+  position: fixed;
 
   &__container {
     width: 80%;
@@ -21,6 +23,10 @@
         display: flex;
         gap: 0.75rem; //12px
       }
+
+      @include mobile {
+        display: none;
+      }
     }
 
     &-box {
@@ -30,6 +36,21 @@
 
       a {
         display: flex;
+      }
+
+      @include mobile {
+        display: none;
+      }
+    }
+
+    &-mobile {
+      display: none;
+
+      @include mobile {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
     }
   }

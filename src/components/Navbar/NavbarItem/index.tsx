@@ -7,9 +7,10 @@ import './styles.scss';
 interface NavbarItemProps {
   label: string;
   route: string;
+  onClick?: () => void;
 }
 
-export const NavbarItem: FC<NavbarItemProps> = ({ label, route }) => {
+export const NavbarItem: FC<NavbarItemProps> = ({ label, route, onClick }) => {
   return (
     <li className='navbar-item'>
       <NavLink
@@ -17,6 +18,7 @@ export const NavbarItem: FC<NavbarItemProps> = ({ label, route }) => {
         className={({ isActive }) => {
           return isActive ? 'navbar-item--activeLink' : 'navbar-item--noActiveLink';
         }}
+        onClick={onClick}
       >
         {label}
       </NavLink>
