@@ -16,7 +16,10 @@ export const getSumOfAllPowerstats = (allPowerstats: Array<PowerstatsI>): Powers
 
   allPowerstats.forEach(stats => {
     Object.keys(totalPowerstats).forEach(key => {
-      totalPowerstats[key] = updateSkill(totalPowerstats[key], stats[key]);
+      totalPowerstats[key as keyof PowerstatsI] = updateSkill(
+        totalPowerstats[key as keyof PowerstatsI],
+        stats[key as keyof PowerstatsI]
+      );
     });
   });
 

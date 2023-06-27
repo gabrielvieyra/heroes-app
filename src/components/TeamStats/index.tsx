@@ -43,7 +43,7 @@ export const TeamStats: FC<TeamStatsProps> = ({ updateTeamSpeciality }) => {
     const maxValue: number = Math.max(...Object.values(sumOfStats).map(val => parseInt(val)));
 
     Object.keys(sumOfStats).forEach(key => {
-      if (sumOfStats[key] === maxValue.toString()) updateTeamSpeciality(key);
+      if (sumOfStats[key as keyof PowerstatsI] === maxValue.toString()) updateTeamSpeciality(key);
     });
 
     setTeamStats(sumOfStats);
