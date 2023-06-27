@@ -12,10 +12,10 @@ Proyecto creado con react que te permite crear tu propio equipo de héroes. Para
 - Registro:
   - La aplicación cuenta con un formulario para registrarse utilizando el servicio de autenticación de Firebase
   - El formulario de registro muestra un mensaje de error si algunos de los inputs están vacíos, si alguno de los datos enviados no son correctos, si ocurrio algun error que no permitió realizar la petición
-- Home: (TODO)
+- Home:
   - Muestra un listado de cards con los miembros del equipo con nombre, imagen, powerstats, botones para ver más detalles del héroe o eliminarlo del equipo
   - Muestra cual es la habilidad mas fuerte del equipo
-  - Muestra la suma de los powerstats de los integrantes del equipo ordenados de mayor a menor
+  - Muestra la suma de los powerstats de los integrantes del equipo
   - Muestra el peso y la altura promedio del equipo
   - Muestra un aviso si no hay ningun heroe en el equipo
 - Buscador de héroes:
@@ -33,7 +33,7 @@ Proyecto creado con react que te permite crear tu propio equipo de héroes. Para
 - Creacion e implementacion de custom hooks con el fin de optimizar el código
 - Manejo de las rutas con React Router Dom
 - Manejo del estado de la aplicación mediante Context API
-- La página web es responsive (TODO)
+- La página web es responsive
 
 ### Usuario para ingresar:
 
@@ -73,8 +73,7 @@ npm run dev
 
 ### Imágenes:
 
-TODO: Captura de pantalla 01
-TODO: Captura de pantalla 02
+![GIF de muestra.](/public/heroes-app.gif 'Vista del proyecto.')
 
 <!-- --------------------------------------------------------------------------------------------------------------------------------------  -->
 
@@ -82,16 +81,10 @@ TODO: Captura de pantalla 02
 - Organizacion del proyecto:
 
 - TODO:
-- diseño de la pagina home / cuando vuelvo para atras que este lo que estaba buscando / deployarlo / responsive
-
+- deployarlo / agregar gif al readme / agregar demo al readme
 - tests unitarios del curso de react?
 
 - Commits:
 - actualizo el readme
-- asasa
-
-- Referentes:
-- https://github.com/jmsanchezdiaz/heroes-app-alkemy/blob/main/src/customHooks/useSpreadContext.ts
-- https://github.com/ezegonzalez912/alkemy-heroes-app/tree/main/src / https://github.com/ezegonzalez912/challenge-alkemy-v2
-- https://github.com/livchits/superheroes-app/tree/89c5097948872ab5dd90ea2c2b7c13fbc3920be8 (challenge@alkemy.org / react)
+- resuelvo errores de eslint
 -->
