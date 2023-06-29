@@ -22,13 +22,11 @@ export const singInWithGoogle = async () => {
     const token = await response.user.getIdToken();
 
     return { ok: true, displayName, token };
-  } catch (error) {
-    if (error instanceof Error) {
-      return {
-        ok: false,
-        errorMessage: error.message,
-      };
-    }
+  } catch (error: any) {
+    return {
+      ok: false,
+      errorMessage: error.message,
+    };
   }
 };
 
@@ -46,13 +44,11 @@ export const registerUserWithEmailAndPassword = async (user: RegUser) => {
       token,
       displayName,
     };
-  } catch (err) {
-    if (err instanceof Error) {
-      return {
-        ok: false,
-        errorMessage: err.message,
-      };
-    }
+  } catch (err: any) {
+    return {
+      ok: false,
+      errorMessage: err.message,
+    };
   }
 };
 
@@ -69,12 +65,10 @@ export const loginWithEmailAndPassword = async (user: LogUser) => {
       token,
       displayName,
     };
-  } catch (error) {
-    if (error instanceof Error) {
-      return {
-        ok: false,
-        errorMessage: error.message,
-      };
-    }
+  } catch (error: any) {
+    return {
+      ok: false,
+      errorMessage: error.message,
+    };
   }
 };
