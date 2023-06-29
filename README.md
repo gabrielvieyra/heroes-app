@@ -74,17 +74,3 @@ npm run dev
 ### Imágenes:
 
 ![GIF de muestra.](/public/heroes-app.gif 'Vista del proyecto.')
-
-<!-- --------------------------------------------------------------------------------------------------------------------------------------  -->
-
-<!--
-- Organizacion del proyecto:
-
-- TODO:
-- deployarlo / agregar demo al readme
-- tests unitarios del curso de react?
-
-- Commits:
-- actualizo el readme
-- resuelvo errores de eslint
--->
