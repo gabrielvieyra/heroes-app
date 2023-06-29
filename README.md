@@ -2,7 +2,7 @@
 
 Proyecto creado con react que te permite crear tu propio equipo de héroes. Para poder utilizar la aplicación, el usuario debe estar autenticado, en el caso de ingresar a una ruta privada será automáticamente redireccionado a la pantalla de login.
 
-**Demo:** link de la demo (TODO)
+**Demo:** https://heroes-app-gabriel-vieyra.vercel.app/
 
 ### Caracteristicas generales:
 
@@ -81,7 +81,7 @@ npm run dev
 - Organizacion del proyecto:
 
 - TODO:
-- deployarlo / agregar gif al readme / agregar demo al readme
+- deployarlo / agregar demo al readme
 - tests unitarios del curso de react?
 
 - Commits:
